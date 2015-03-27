@@ -1,0 +1,5 @@
+aside label {display:block;font-weight:normal;}
+aside input[type=range] {display:inline;width:100px;}
+aside .disabled label {color:#bbb;}
+aside .range {margin:10px 0;}
+aside .panel-body {padding:0 15px;}

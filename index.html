@@ -1,0 +1,146 @@
+<!--
+
+                   ..oo$00ooo..                    ..ooo00$oo..
+                .o$$$$$$$$$'                          '$$$$$$$$$o.
+             .o$$$$$$$$$"             .   .              "$$$$$$$$$o.
+           .o$$$$$$$$$$~             /$   $\              ~$$$$$$$$$$o.
+         .{$$$$$$$$$$$.              $\___/$               .$$$$$$$$$$$}.
+        o$$$$$$$$$$$$8              .$$$$$$$.               8$$$$$$$$$$$$o
+       $$$$$$$$$$$$$$$              $$$$$$$$$               $$$$$$$$$$$$$$$
+      o$$$$$$$$$$$$$$$.             o$$$$$$$o              .$$$$$$$$$$$$$$$o
+      $$$$$$$$$$$$$$$$$.           o{$$$$$$$}o            .$$$$$$$$$$$$$$$$$
+     ^$$$$$$$$$$$$$$$$$$.         J$$$$$$$$$$$L          .$$$$$$$$$$$$$$$$$$^
+     !$$$$$$$$$$$$$$$$$$$$oo..oo$$$$$$$$$$$$$$$$$oo..oo$$$$$$$$$$$$$$$$$$$$$!
+     {$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$}
+     6$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$?
+     '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$'
+      o$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$o
+       $$$$$$$$$$$$$$;'~`^Y$$$7^''o$$$$$$$$$$$o''^Y$$$7^`~';$$$$$$$$$$$$$$$
+       '$$$$$$$$$$$'       `$'    `'$$$$$$$$$'     `$'       '$$$$$$$$$$$$'
+        !$$$$$$$$$7         !       '$$$$$$$'       !         V$$$$$$$$$!
+         ^o$$$$$$!                   '$$$$$'                   !$$$$$$o^
+           ^$$$$$"                    $$$$$                    "$$$$$^
+             'o$$$`                   ^$$$'                   '$$$o'
+               ~$$$.                   $$$.                  .$$$~
+                 '$;.                  `$'                  .;$'
+                    '.                  !                  .`
+--><!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Batman Ipsum</title>
+    <meta name="description" content="Generate random text using Batman movies punchlines" />
+    <meta name="viewport"    content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="copyright"   content="Bruno SIMON" />
+    <meta name="author"      content="Bruno Simon" />
+    <meta name="google"      value="notranslate" />
+
+    <meta http-equiv="x-ua-compatible" content="IE=Edge"/>
+    <meta http-equiv="content-language" content="en" />
+
+    <meta property="og:title"       content="Batman Ipsum">
+    <meta property="og:url"         content="http://batman-ipsum.com">
+    <meta property="og:site_name"   content="Batman Ipsum">
+    <meta property="og:type"        content="website">
+    <meta property="og:description" content="Generate random text using Batman movies punchlines">
+    <meta property="og:image"       content="#">
+
+    <link rel="stylesheet" href="src/css/bootstrap.min.css">
+    <link rel="stylesheet" href="src/css/style.css">
+</head>
+<body>
+
+    <div ng-controller="main" class="container">
+        <h1>Batman Ipsum</h1>
+        <div class="row">
+            <aside class="col-sm-4">
+
+                <!-- FILMS -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-title"><span class="glyphicon glyphicon-film" aria-hidden="true"></span> <strong>Films</strong></span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="checkbox"><label><input type="checkbox"> Begins</label></div>
+                        <div class="checkbox"><label><input type="checkbox"> The Dark Knight</label></div>
+                        <div class="checkbox"><label><input type="checkbox"> The Dark Knight Rises</label></div>
+                    </div>
+                </div>
+
+                <!-- CHARACTERS -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-title"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <strong>Characters</strong></span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="checkbox"><label><input type="checkbox"> Batman (Bruce Wayne)</label></div>
+                        <div class="checkbox"><label><input type="checkbox"> Bane</label></div>
+                        <div class="checkbox"><label><input type="checkbox"> Joker</label></div>
+                        <div class="checkbox"><label><input type="checkbox"> Alfred</label></div>
+                        <div class="checkbox"><label><input type="checkbox"> Some Guy</label></div>
+                        <div class="checkbox"><label><input type="checkbox"> Ra's Al Ghul (Henri Ducard)</label></div>
+                        <div class="checkbox"><label><input type="checkbox"> Thomas Wayne</label></div>
+                        <div class="checkbox"><label><input type="checkbox"> Rachel</label></div>
+                        <div class="checkbox"><label><input type="checkbox"> Falcone</label></div>
+                        <div class="checkbox"><label><input type="checkbox"> Scarecrow (Dr. Jonathan Crane)</label></div>
+                        <div class="checkbox"><label><input type="checkbox"> Lucius Fox</label></div>
+                        <div class="checkbox"><label><input type="checkbox"> Two-Face (Harvey Dent)</label></div>
+                        <div class="checkbox"><label><input type="checkbox"> Blake</label></div>
+                        <div class="checkbox"><label><input type="checkbox"> Gordon</label></div>
+                        <div class="checkbox disabled"><label><input type="checkbox" disabled> Selina</label></div>
+                        <div class="checkbox disabled"><label><input type="checkbox" disabled> Miranda</label></div>
+                    </div>
+                </div>
+
+                <!-- PARAGRAPHES -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-title"><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span> <strong>Paragraphes</strong></span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="range"><label><input type="range" min="0" max="10" value="0"> <span class="label label-default">0</span> min size</label></div>
+                        <div class="range"><label><input type="range" min="0" max="10" value="10"> <span class="label label-default">10</span> max size</label></div>
+                        <div class="range"><label><input type="range" min="0" max="200" value="14"> <span class="label label-default">14</span> count</label></div>
+                    </div>
+                </div>
+
+                <!-- OPTIONS -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-title"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <strong>Options</strong></span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="checkbox"><label><input type="checkbox"> Show names</label></div>
+                        <div class="checkbox"><label><input type="checkbox"> &lt;p&gt; HTML</label></div>
+                    </div>
+                </div>
+
+            </aside>
+            <section class="col-sm-8">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-title">
+                            <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> Copy to clipboard</button>
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, corrupti ut quod, ea nisi laboriosam est, rem autem quo explicabo tempora ad aperiam vitae, consequatur. Cum illum, aperiam accusantium ullam?</p>
+                        <p>Lorem ipsum dolor sit</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, corrupti ut quod, ea nisi laboriosam est, rem autem quo explicabo tempora ad aperiam vitae, consequatur. Cum illum, aperiam accusantium ullam?</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, corrupti ut quod, ea nisi laboriosam est, rem autem quo explicabo tempora ad aperiam vitae, consequatur.</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, corrupti ut quod, ea nisi laboriosam est, rem autem quo explicabo tempora ad aperiam vitae</p>
+                        <p>Lorem ipsum dolor sit</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="src/js/libs/underscore.min.js"></script>
+    <script src="src/js/libs/angular.min.js"></script>
+    <script src="src/js/libs/angular-resource.min.js"></script>
+    <script src="src/js/app/app.js"></script>
+</body>
+</html>
