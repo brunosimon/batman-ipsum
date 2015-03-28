@@ -1,5 +1,14 @@
 aside label {display:block;font-weight:normal;}
-aside input[type=range] {display:inline;width:100px;}
+aside input[type=range] {display:inline;width:140px;}
 aside .disabled label {color:#bbb;}
 aside .range {margin:10px 0;}
 aside .panel-body {padding:0 15px;}
+aside .shortcuts {position:relative;top:-2px;left:5px;float:right;}
+
+@media (min-width:768px) {
+    aside span.alias {display:none;}
+}
+
+@media (min-width:992px) {
+    aside span.alias {display:inline;}
+}

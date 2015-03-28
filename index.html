@@ -58,60 +58,71 @@
                 <!-- FILMS -->
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <span class="panel-title"><span class="glyphicon glyphicon-film" aria-hidden="true"></span> <strong>Films</strong></span>
+                        <span class="panel-title">
+                            <span class="glyphicon glyphicon-film" aria-hidden="true"></span>
+                            <strong>Movies</strong>
+                            <span class="shortcuts">
+                                <button class="btn btn-default btn-xs" ng-click="check_all('movies')"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> all</button>
+                                <button class="btn btn-default btn-xs" ng-click="uncheck_all('movies')"><span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span> all</button>
+                            </span>
+                        </span>
                     </div>
                     <div class="panel-body">
-                        <div class="checkbox"><label><input type="checkbox"> Begins</label></div>
-                        <div class="checkbox"><label><input type="checkbox"> The Dark Knight</label></div>
-                        <div class="checkbox"><label><input type="checkbox"> The Dark Knight Rises</label></div>
+                        <div ng-repeat="movie in params.movies" class="checkbox"><label><input ng-model="movie.value" ng-change="update()" type="checkbox"> {{movie.name}}</label></div>
                     </div>
                 </div>
 
                 <!-- CHARACTERS -->
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <span class="panel-title"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <strong>Characters</strong></span>
+                        <span class="panel-title">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                            <strong>Characters</strong>
+                            <span class="shortcuts">
+                                <button ng-click="check_all('characters')" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> all</button>
+                                <button ng-click="uncheck_all('characters')" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span> all</button>
+                            </span>
+                        </span>
                     </div>
                     <div class="panel-body">
-                        <div class="checkbox"><label><input type="checkbox"> Batman (Bruce Wayne)</label></div>
-                        <div class="checkbox"><label><input type="checkbox"> Bane</label></div>
-                        <div class="checkbox"><label><input type="checkbox"> Joker</label></div>
-                        <div class="checkbox"><label><input type="checkbox"> Alfred</label></div>
-                        <div class="checkbox"><label><input type="checkbox"> Some Guy</label></div>
-                        <div class="checkbox"><label><input type="checkbox"> Ra's Al Ghul (Henri Ducard)</label></div>
-                        <div class="checkbox"><label><input type="checkbox"> Thomas Wayne</label></div>
-                        <div class="checkbox"><label><input type="checkbox"> Rachel</label></div>
-                        <div class="checkbox"><label><input type="checkbox"> Falcone</label></div>
-                        <div class="checkbox"><label><input type="checkbox"> Scarecrow (Dr. Jonathan Crane)</label></div>
-                        <div class="checkbox"><label><input type="checkbox"> Lucius Fox</label></div>
-                        <div class="checkbox"><label><input type="checkbox"> Two-Face (Harvey Dent)</label></div>
-                        <div class="checkbox"><label><input type="checkbox"> Blake</label></div>
-                        <div class="checkbox"><label><input type="checkbox"> Gordon</label></div>
-                        <div class="checkbox disabled"><label><input type="checkbox" disabled> Selina</label></div>
-                        <div class="checkbox disabled"><label><input type="checkbox" disabled> Miranda</label></div>
+                        <div ng-repeat="character in params.characters" ng-class="{ disabled : character.disabled }" class="checkbox"><label><input type="checkbox" ng-model="character.value" ng-change="update()"> {{character.name}} <span ng-if="character.alias" class="alias">({{character.alias}})</span></label></div>
                     </div>
                 </div>
 
                 <!-- PARAGRAPHES -->
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <span class="panel-title"><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span> <strong>Paragraphes</strong></span>
+                        <span class="panel-title">
+                            <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                            <strong>Paragraphes</strong>
+                            <span class="shortcuts" ng-if="params.paragraphes.min != defaults.paragraphes.min || params.paragraphes.max != defaults.paragraphes.max || params.paragraphes.count != defaults.paragraphes.count">
+                                <button ng-click="reset('paragraphes')" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> refresh</button>
+                            </span>
+                        </span>
                     </div>
                     <div class="panel-body">
-                        <div class="range"><label><input type="range" min="0" max="10" value="0"> <span class="label label-default">0</span> min size</label></div>
-                        <div class="range"><label><input type="range" min="0" max="10" value="10"> <span class="label label-default">10</span> max size</label></div>
-                        <div class="range"><label><input type="range" min="0" max="200" value="14"> <span class="label label-default">14</span> count</label></div>
+                        <div class="range"><label><input ng-model="params.paragraphes.min"   ng-change="update()" type="range" min="0" max="10" value="0"> <span class="label label-default">{{params.paragraphes.min}}</span> min size</label></div>
+                        <div class="range"><label><input ng-model="params.paragraphes.max"   ng-change="update()" type="range" min="0" max="10" value="10"> <span class="label label-default">{{params.paragraphes.max}}</span> max size</label></div>
+                        <div class="range"><label><input ng-model="params.paragraphes.count" ng-change="update()" type="range" min="0" max="{{params.max_paragraphe_count}}" value="14"> <span class="label label-default">{{params.paragraphes.count}}</span> count</label></div>
                     </div>
                 </div>
 
                 <!-- OPTIONS -->
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <span class="panel-title"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <strong>Options</strong></span>
+                        <span class="panel-title">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                            <strong>Options</strong>
+                            <span class="shortcuts" ng-if="params.options.name != defaults.options.name || params.options.html != defaults.options.html || params.options.nanana != defaults.options.nanana">
+                                <button ng-click="reset('options')" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> refresh</button>
+                            </span>
+                        </span>
                     </div>
                     <div class="panel-body">
-                        <div class="checkbox"><label><input type="checkbox"> Show names</label></div>
-                        <div class="checkbox"><label><input type="checkbox"> &lt;p&gt; HTML</label></div>
+                        <div class="checkbox"><label><input ng-model="params.options.name"       ng-change="update()" type="checkbox"> Show names</label></div>
+                        <div class="checkbox"><label><input ng-model="params.options.html"       ng-change="update()" type="checkbox"> &lt;p&gt; HTML</label></div>
+                        <div class="checkbox"><label><input ng-model="params.options.nanana"     ng-change="update()" type="checkbox"> nanana</label></div>
+                        <div class="checkbox"><label><input ng-model="params.options.line_break" ng-change="update()" type="checkbox"> Line break</label></div>
                     </div>
                 </div>
 
@@ -121,17 +132,12 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <span class="panel-title">
-                            <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> Copy to clipboard</button>
+                            <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> Copy to clipboard</button>
+                            <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> New one</button>
                         </span>
                     </div>
-                    <div class="panel-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, corrupti ut quod, ea nisi laboriosam est, rem autem quo explicabo tempora ad aperiam vitae, consequatur. Cum illum, aperiam accusantium ullam?</p>
-                        <p>Lorem ipsum dolor sit</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, corrupti ut quod, ea nisi laboriosam est, rem autem quo explicabo tempora ad aperiam vitae, consequatur. Cum illum, aperiam accusantium ullam?</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, corrupti ut quod, ea nisi laboriosam est, rem autem quo explicabo tempora ad aperiam vitae, consequatur.</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, corrupti ut quod, ea nisi laboriosam est, rem autem quo explicabo tempora ad aperiam vitae</p>
-                        <p>Lorem ipsum dolor sit</p>
+                    <div class="panel-body" ng-bind-html="params.value">
+
                     </div>
                 </div>
             </section>
@@ -141,6 +147,7 @@
     <script src="src/js/libs/underscore.min.js"></script>
     <script src="src/js/libs/angular.min.js"></script>
     <script src="src/js/libs/angular-resource.min.js"></script>
+    <script src="src/js/libs/angular-sanitize.min.js"></script>
     <script src="src/js/app/app.js"></script>
 </body>
 </html>
