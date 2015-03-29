@@ -1,5 +1,21 @@
-var app = angular.module( 'app', [ 'ngResource', 'ngSanitize' ] );
+var app = angular.module( 'app', [ 'ngResource', 'ngSanitize', 'ngClipboard' ] );
 
+/**
+ * Config
+ */
+app.config(
+    [
+        'ngClipProvider',
+        function( ngClipProvider )
+        {
+            ngClipProvider.setPath( 'src/js/libs/ZeroClipboard.swf' );
+        }
+    ]
+);
+
+/**
+ * Data service
+ */
 app.service(
     'data',
     [
@@ -130,6 +146,7 @@ app.service(
             {
                 var texts      = [],
                     texts_step = Math.ceil( data.params.max_text_length / data.defaults.paragraphes.max ),
+                    count      = data.params.paragraphes.count,
                     id_movies  = _.map( data.params.movies, function( movie )
                     {
                         return movie.value ? movie.id : null;
@@ -139,58 +156,102 @@ app.service(
                         return character.value ? character.id : null;
                     } );
 
-                // console.log(texts_step);
-
-                // Filter texts
-                for( var key in data.inputs.texts )
+                // Nanana BATMAN!
+                if( data.params.options.nanana )
                 {
-                    var text = data.inputs.texts[ key ];
-
-                    // In movies
-                    if( id_movies.indexOf( text.id_movie ) !== -1 )
+                    while( count-- )
                     {
-                        // In characters
-                        if( id_characters.indexOf( text.id_character ) !== -1 )
+                        var size        = ( data.params.paragraphes.min * texts_step ) + Math.random() * ( ( data.params.paragraphes.max - data.params.paragraphes.min ) * texts_step ),
+                            words_count = Math.round( size / 14 ),
+                            text        = [];
+
+                        while( words_count-- )
                         {
-                            // Size
-                            if( text.text.length > data.params.paragraphes.min * texts_step && text.text.length < data.params.paragraphes.max * texts_step )
+                            if( !text.length )
+                                text.push( 'Na na na' );
+                            else
                             {
-                                texts.push( text );
+                                if( Math.random() < 0.2 )
+                                    text.push( 'Batman!' );
+                                else
+                                    text.push( 'na na na' );
                             }
                         }
+
+                        texts.push( text.join(' ') );
                     }
                 }
 
-                // Shuffle
-                texts = _.shuffle( texts );
-
-                // Paragraphes count
-                texts = texts.slice( 0, data.params.paragraphes.count );
-
-                // Join
-                texts = _.map( texts, function( text )
+                // Normal version
+                else
                 {
-                    var new_text = [];
+                    // Filter texts
+                    for( var key in data.inputs.texts )
+                    {
+                        var text = data.inputs.texts[ key ];
 
-                    // HTML
-                    if( data.params.options.html )
-                        new_text.push( '&lt;p&gt;' );
+                        // In movies
+                        if( id_movies.indexOf( text.id_movie ) !== -1 )
+                        {
+                            // In characters
+                            if( id_characters.indexOf( text.id_character ) !== -1 )
+                            {
+                                // Size
+                                if( text.text.length > data.params.paragraphes.min * texts_step && text.text.length < data.params.paragraphes.max * texts_step )
+                                {
+                                    texts.push( text );
+                                }
+                            }
+                        }
+                    }
 
-                    // Author
-                    if( data.params.options.name )
-                        new_text.push( 'Author: ' );
+                    // Texts founds
+                    if( texts.length )
+                    {
+                        // Shuffle
+                        var texts_tmp = _.shuffle( texts );
 
-                    new_text.push( text.text );
+                        // Paragraphes count
+                        texts_tmp = texts_tmp.slice( 0, data.params.paragraphes.count );
 
-                    // HTML
-                    if( data.params.options.html )
-                        new_text.push( '&lt;/p&gt;' );
+                        // Reformat
+                        texts_tmp = _.map( texts_tmp, function( text )
+                        {
+                            var new_text = [];
 
-                    return new_text.join('');
-                } );
+                            // HTML
+                            if( data.params.options.html )
+                                new_text.push( '<p>' );
 
-                texts = texts.join( data.params.options.line_break ? '<br><br>' : '<br>' );
+                            // Author
+                            if( data.params.options.name )
+                            {
+                                var author = _.find( data.inputs.characters, function( character )
+                                {
+                                    return character.id === text.id_character;
+                                } );
+                                new_text.push( author.name + ': ' );
+                            }
 
+                            // Text
+                            // text.text = text.text.replace( /[\w]+/g, Math.random() < 0.2 ? 'Batman' : 'na na' );
+                            new_text.push( text.text );
+
+                            // HTML
+                            if( data.params.options.html )
+                                new_text.push( '</p>' );
+
+                            return new_text.join( '' );
+                        } );
+
+                        // Respect count
+                        texts = [];
+                        while( count-- )
+                            texts.push( texts_tmp[ count % texts_tmp.length ] );
+                    }
+                }
+
+                texts = texts.join( data.params.options.line_break ? '\n\n' : '\n' );
                 data.params.value = texts;
             };
 
@@ -247,6 +308,9 @@ app.service(
     ]
 );
 
+/**
+ * Controller
+ */
 app.controller(
     'main',
     [
@@ -261,6 +325,36 @@ app.controller(
             $scope.check_all   = data.check_all;
             $scope.uncheck_all = data.uncheck_all;
             $scope.reset       = data.reset;
+            $scope.copy_label  = 'Copy to clipboard';
+
+            $scope.reset_copy_label = function()
+            {
+                $scope.copy_label = 'Copy to clipboard';
+            };
+
+            $scope.get_copy = function()
+            {
+                $scope.$apply( function()
+                {
+                    $scope.copy_label = 'Copied!';
+                } );
+
+                return data.params.value;
+            };
+
+            $scope.$watch( 'params.paragraphes.min', function( new_value )
+            {
+                new_value = parseInt( new_value );
+                if( data.params.paragraphes.max < new_value + 1 && data.params.paragraphes.max < data.defaults.paragraphes.max )
+                    data.params.paragraphes.max = new_value + 1;
+            } );
+
+            $scope.$watch( 'params.paragraphes.max', function( new_value )
+            {
+                new_value = parseInt( new_value );
+                if( data.params.paragraphes.min > new_value - 1 && data.params.paragraphes.min > data.defaults.paragraphes.min )
+                    data.params.paragraphes.min = new_value - 1;
+            } );
         }
     ]
 );
